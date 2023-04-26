@@ -6,9 +6,9 @@ import okhttp3.Response
 class MyCustomInterceptor: Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {
-        val MyRequest = chain.request().newBuilder()
+        val myRequest = chain.request().newBuilder()
             .addHeader("Authorization","adadagkljlkasdjklahflasd")
             .build()
-        return chain.proceed(MyRequest)
+        return chain.proceed(myRequest)
     }
 }

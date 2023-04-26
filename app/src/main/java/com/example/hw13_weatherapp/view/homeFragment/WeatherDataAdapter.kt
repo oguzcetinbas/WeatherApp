@@ -22,7 +22,6 @@ class WeatherDataAdapter(weatherResponse: WeatherResponse) :
 
     private val currentWeather = weatherResponse.currentWeather
     private val times = weatherResponse.daily?.time
-    private val weatherCodes = weatherResponse.daily?.weathercode
     private val maxTemps = weatherResponse.daily?.apparentTemperatureMax
     private val minTemps = weatherResponse.daily?.apparentTemperatureMin
     private val icons = weatherResponse.icons
@@ -41,7 +40,8 @@ class WeatherDataAdapter(weatherResponse: WeatherResponse) :
             )
 
             Consts.VIEW_TYPE_NEXTDAYS -> layoutInflater.inflate(
-                R.layout.next_days_item, parent,
+                R.layout.next_days_item,
+                parent,
                 false
             )
 
@@ -53,18 +53,18 @@ class WeatherDataAdapter(weatherResponse: WeatherResponse) :
     override fun onBindViewHolder(holder: WeatherDataAdapter.WeatherDataViewHolder, position: Int) {
         holder.bind(
             time = times?.get(position),
-            weatherCode = weatherCodes?.get(position),
             maxTemp = maxTemps?.get(position),
             minTemp = minTemps?.get(position),
             icon = icons[position]
-
         )
     }
+
     override fun getItemCount(): Int {
         return times?.size ?: 0
     }
 
     override fun getItemViewType(position: Int): Int {
+
         return if (position == 0) {
             Consts.VIEW_TYPE_CURRENT_DAY
         } else
@@ -74,7 +74,6 @@ class WeatherDataAdapter(weatherResponse: WeatherResponse) :
     inner class WeatherDataViewHolder(itemView: View) : ViewHolder(itemView) {
         fun bind(
             time: String?,
-            weatherCode: Int?,
             maxTemp: Double?,
             minTemp: Double?,
             icon: Int

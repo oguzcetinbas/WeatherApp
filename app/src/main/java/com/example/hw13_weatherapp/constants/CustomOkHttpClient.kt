@@ -19,8 +19,5 @@ class CustomOkHttpClient() : OkHttpClient() {
             .cache(cache)
             .addInterceptor(MyCustomInterceptor())
             .build()
-
     }
-
-
 }
