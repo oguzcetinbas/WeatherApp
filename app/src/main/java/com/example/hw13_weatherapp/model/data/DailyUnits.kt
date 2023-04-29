@@ -5,11 +5,11 @@ import com.google.gson.annotations.SerializedName
 
 data class DailyUnits(
     @SerializedName("apparent_temperature_max")
-    val apparentTemperatureMax: String?,
+    val apparentTemperatureMax: String,
     @SerializedName("apparent_temperature_min")
-    val apparentTemperatureMin: String?,
+    val apparentTemperatureMin: String,
     @SerializedName("time")
-    val time: String?,
+    val time: String,
     @SerializedName("weathercode")
-    val weathercode: String?
+    val weathercode: String
 )

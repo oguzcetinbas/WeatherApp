@@ -48,6 +48,7 @@ class HomeViewModel : ViewModel() {
     private fun setIcons(weatherResponse: WeatherResponse?) {
 
         val weatherCodes = weatherResponse?.daily?.weathercode
+
         val icons = ArrayList<Int>()
 
         weatherCodes?.forEach {

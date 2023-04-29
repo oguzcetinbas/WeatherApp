@@ -17,13 +17,12 @@ import com.example.hw13_weatherapp.model.data.WeatherResponse
 import java.text.DateFormat
 import java.util.Calendar
 
-class WeatherDataAdapter(weatherResponse: WeatherResponse) :
-    Adapter<WeatherDataAdapter.WeatherDataViewHolder>() {
+class WeatherDataAdapter(weatherResponse: WeatherResponse) : Adapter<WeatherDataAdapter.WeatherDataViewHolder>() {
 
     private val currentWeather = weatherResponse.currentWeather
-    private val times = weatherResponse.daily?.time
-    private val maxTemps = weatherResponse.daily?.apparentTemperatureMax
-    private val minTemps = weatherResponse.daily?.apparentTemperatureMin
+    private val times = weatherResponse.daily.time
+    private val maxTemps = weatherResponse.daily.apparentTemperatureMax
+    private val minTemps = weatherResponse.daily.apparentTemperatureMin
     private val icons = weatherResponse.icons
 
     override fun onCreateViewHolder(
@@ -52,15 +51,15 @@ class WeatherDataAdapter(weatherResponse: WeatherResponse) :
 
     override fun onBindViewHolder(holder: WeatherDataAdapter.WeatherDataViewHolder, position: Int) {
         holder.bind(
-            time = times?.get(position),
-            maxTemp = maxTemps?.get(position),
-            minTemp = minTemps?.get(position),
+            time = times[position],
+            maxTemp = maxTemps[position],
+            minTemp = minTemps[position],
             icon = icons[position]
         )
     }
 
     override fun getItemCount(): Int {
-        return times?.size ?: 0
+        return times.size ?: 0
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -81,9 +80,9 @@ class WeatherDataAdapter(weatherResponse: WeatherResponse) :
             if (adapterPosition == Consts.VIEW_TYPE_CURRENT_DAY) {
                 val binding = CurrentDayItemBinding.bind(itemView)
                 binding.apply {
-                    tvTemperature.text = currentWeather?.temperature?.toString()?.addCelcius()
-                    tvWindSpeed.text = currentWeather?.windspeed?.toString()?.addSpeedText()
-                    tvWindDirection.text = currentWeather?.winddirection?.toString()
+                    tvTemperature.text = currentWeather.temperature.toString().addCelcius()
+                    tvWindSpeed.text = currentWeather.windspeed.toString().addSpeedText()
+                    tvWindDirection.text = currentWeather.winddirection.toString()
                     ivWeatherIcon.setImageResource(icon)
                 }
             } else {

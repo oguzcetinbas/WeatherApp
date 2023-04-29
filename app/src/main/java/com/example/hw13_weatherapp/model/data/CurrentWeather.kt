@@ -4,16 +4,22 @@ package com.example.hw13_weatherapp.model.data
 import com.google.gson.annotations.SerializedName
 
 data class CurrentWeather(
+
     @SerializedName("is_day")
-    val isDay: Int?,
+    val isDay: Int,
+
     @SerializedName("temperature")
-    val temperature: Double?,
+    val temperature: Double,
+
     @SerializedName("time")
-    val time: String?,
+    val time: String,
+
     @SerializedName("weathercode")
-    val weathercode: Int?,
+    val weathercode: Int,
+
     @SerializedName("winddirection")
-    val winddirection: Double?,
+    val winddirection: Double,
+
     @SerializedName("windspeed")
-    val windspeed: Double?
+    val windspeed: Double
 )

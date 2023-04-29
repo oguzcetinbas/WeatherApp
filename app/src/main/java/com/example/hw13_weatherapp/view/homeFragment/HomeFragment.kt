@@ -4,15 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.example.hw13_weatherapp.R
-import com.example.hw13_weatherapp.databinding.CurrentDayItemBinding
 import com.example.hw13_weatherapp.databinding.FragmentHomeBinding
 import com.example.hw13_weatherapp.model.data.WeatherResponse
-import java.text.DateFormat
-import java.util.Calendar
 
 class HomeFragment : Fragment() {
 
