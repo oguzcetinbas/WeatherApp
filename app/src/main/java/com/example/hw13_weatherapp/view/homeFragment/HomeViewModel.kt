@@ -9,12 +9,9 @@ import com.example.hw13_weatherapp.model.data.WeatherResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import android.icu.text.DateFormat
-import android.icu.util.Calendar
-import com.example.hw13_weatherapp.model.data.Daily
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
-import java.time.format.FormatStyle
+import android.util.Log
+import com.example.hw13_weatherapp.repo.WeatherPropertyRepostory
+
 
 class HomeViewModel : ViewModel() {
 
@@ -22,7 +19,6 @@ class HomeViewModel : ViewModel() {
 
     private val _weatherData = MutableLiveData<WeatherResponse?>()
     val weatherData: LiveData<WeatherResponse?> = _weatherData
-
 
     fun getDataService() {
 
@@ -33,8 +29,18 @@ class HomeViewModel : ViewModel() {
             ) {
                 if (response.isSuccessful) {
                     val weatherResponse = response.body()
+                    weatherResponse.let {
+                        if (it != null) {
+                            WeatherPropertyRepostory.insertProperties(it) { succes ->
+                                if (succes) {
+                                    Log.e("Database islemi", "Kayit basarili")
+                                } else {
+                                    Log.e("Database islemi", "Hata")
+                                }
+                            }
+                        }
+                    }
                     setIcons(weatherResponse)
-
                     _weatherData.value = weatherResponse
                 }
             }
@@ -66,6 +72,5 @@ class HomeViewModel : ViewModel() {
             }
         }
         weatherResponse?.icons = icons
-
     }
 }

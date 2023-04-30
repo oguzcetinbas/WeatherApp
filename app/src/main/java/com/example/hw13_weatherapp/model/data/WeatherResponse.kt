@@ -7,13 +7,11 @@ import androidx.room.TypeConverter
 import androidx.room.TypeConverters
 import com.google.gson.annotations.SerializedName
 
-
 @Entity(tableName = "weather_property")
 data class WeatherResponse(
 
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
-
 
     @SerializedName("current_weather")
     val currentWeather: CurrentWeather,
