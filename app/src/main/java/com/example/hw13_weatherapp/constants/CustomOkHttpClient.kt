@@ -12,6 +12,7 @@ class CustomOkHttpClient() : OkHttpClient() {
         httpInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
         val cache = Cache(Environment.getDownloadCacheDirectory(),10 * 1024 * 1024)
 
+
         return OkHttpClient.Builder()
             .addInterceptor(httpInterceptor)
             .readTimeout(30, TimeUnit.SECONDS)

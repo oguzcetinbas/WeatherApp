@@ -10,7 +10,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import android.util.Log
-import com.example.hw13_weatherapp.repo.WeatherPropertyRepostory
+import com.example.hw13_weatherapp.repo.WeatherPropertyRepository
 
 
 class HomeViewModel : ViewModel() {
@@ -31,7 +31,7 @@ class HomeViewModel : ViewModel() {
                     val weatherResponse = response.body()
                     weatherResponse.let {
                         if (it != null) {
-                            WeatherPropertyRepostory.insertProperties(it) { succes ->
+                            WeatherPropertyRepository.insertProperties(it) { succes ->
                                 if (succes) {
                                     Log.e("Database islemi", "Kayit basarili")
                                 } else {

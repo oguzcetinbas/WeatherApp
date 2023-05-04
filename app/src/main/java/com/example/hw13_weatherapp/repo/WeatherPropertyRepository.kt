@@ -9,7 +9,7 @@ import java.lang.Exception
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
-object WeatherPropertyRepostory {
+object WeatherPropertyRepository {
 
     private lateinit var weatherPropertyDao: WeatherPropertyDao
     private val executor: ExecutorService = Executors.newSingleThreadExecutor()
@@ -28,7 +28,7 @@ object WeatherPropertyRepostory {
     fun insertProperties(properties: WeatherResponse, callback: (succes: Boolean) -> Unit) {
         executor.execute {
             try {
-                weatherPropertyDao.insertProperties(properties)
+                weatherPropertyDao.insert(properties)
                 callback(true)
             } catch (e: Exception) {
                 e.printStackTrace()

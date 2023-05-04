@@ -12,7 +12,7 @@ class DatabaseConverter {
     fun fromString(value: String): CurrentWeather {
         return Gson().fromJson(value, CurrentWeather::class.java)
     }
-
+    
     @TypeConverter
     fun fromCurrentWeather(weather: CurrentWeather): String {
         return Gson().toJson(weather)
@@ -84,6 +84,4 @@ class DatabaseConverter {
     fun fromListInt(list: List<Int?>): String {
         return gson.toJson(list)
     }
-
-
 }

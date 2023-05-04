@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.hw13_weatherapp.databinding.FragmentHomeBinding
 import com.example.hw13_weatherapp.model.data.WeatherResponse
-import com.example.hw13_weatherapp.repo.WeatherPropertyRepostory
+import com.example.hw13_weatherapp.repo.WeatherPropertyRepository
 
 class HomeFragment : Fragment() {
 
@@ -20,7 +20,7 @@ class HomeFragment : Fragment() {
     ): View {
         binding = FragmentHomeBinding.inflate(inflater)
 
-        context?.let { WeatherPropertyRepostory.initialize(it) }
+        context?.let { WeatherPropertyRepository.initialize(it) }
 
 
         if (viewModel.weatherData.value == null) {
