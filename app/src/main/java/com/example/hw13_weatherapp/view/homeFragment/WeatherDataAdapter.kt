@@ -1,10 +1,8 @@
 package com.example.hw13_weatherapp.view.homeFragment
 
 import android.view.LayoutInflater
-import android.view.TextureView
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.example.hw13_weatherapp.R
@@ -14,8 +12,6 @@ import com.example.hw13_weatherapp.constants.addSpeedText
 import com.example.hw13_weatherapp.databinding.CurrentDayItemBinding
 import com.example.hw13_weatherapp.databinding.NextDaysItemBinding
 import com.example.hw13_weatherapp.model.data.WeatherResponse
-import java.text.DateFormat
-import java.util.Calendar
 
 class WeatherDataAdapter(weatherResponse: WeatherResponse) : Adapter<WeatherDataAdapter.WeatherDataViewHolder>() {
 
@@ -54,8 +50,9 @@ class WeatherDataAdapter(weatherResponse: WeatherResponse) : Adapter<WeatherData
             time = times[position],
             maxTemp = maxTemps[position],
             minTemp = minTemps[position],
-            icon = icons[position]
-        )
+            icon = icons[position],
+
+            )
     }
 
     override fun getItemCount(): Int {
@@ -76,6 +73,7 @@ class WeatherDataAdapter(weatherResponse: WeatherResponse) : Adapter<WeatherData
             maxTemp: Double?,
             minTemp: Double?,
             icon: Int
+
         ) {
             if (adapterPosition == Consts.VIEW_TYPE_CURRENT_DAY) {
                 val binding = CurrentDayItemBinding.bind(itemView)
@@ -92,6 +90,7 @@ class WeatherDataAdapter(weatherResponse: WeatherResponse) : Adapter<WeatherData
                     tvMinTemp.text = minTemp.toString().addCelcius()
                     tvMaxTemp.text = maxTemp.toString().addCelcius()
                     ivWeatherIcon.setImageResource(icon)
+
                 }
             }
         }

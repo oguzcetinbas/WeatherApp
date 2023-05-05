@@ -1,31 +1,36 @@
 package com.example.hw13_weatherapp.view.homeFragment
 
+
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import com.example.hw13_weatherapp.databinding.FragmentHomeBinding
 import com.example.hw13_weatherapp.model.data.WeatherResponse
 import com.example.hw13_weatherapp.repo.WeatherPropertyRepository
+import com.example.hw13_weatherapp.view.factory.HomeViewModelFactory
 
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(){
+
 
     private lateinit var binding: FragmentHomeBinding
-    private val viewModel: HomeViewModel by viewModels()
+    private lateinit var viewModel: HomeViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         binding = FragmentHomeBinding.inflate(inflater)
 
-        context?.let { WeatherPropertyRepository.initialize(it) }
+
+        val weatherPropertyRepository = WeatherPropertyRepository(requireContext())
+        viewModel = ViewModelProvider(
+            this,
+            HomeViewModelFactory(weatherPropertyRepository)
+        )[HomeViewModel::class.java]
 
 
-        if (viewModel.weatherData.value == null) {
-            viewModel.getDataService()
-        }
         initObserve()
         return binding.root
     }
@@ -35,10 +40,11 @@ class HomeFragment : Fragment() {
             initRecyclerView(it)
         }
     }
-
     private fun initRecyclerView(weatherResponse: WeatherResponse?) {
 
         val adapter = WeatherDataAdapter(weatherResponse ?: throw IllegalAccessError(""))
+        //findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToSecondFragment(weatherResponse))
         binding.recyclerView.adapter = adapter
     }
+
 }

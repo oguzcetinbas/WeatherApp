@@ -1,10 +1,10 @@
 package com.example.hw13_weatherapp.model.data
 
 
+import android.os.Parcel
+import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import androidx.room.TypeConverter
-import androidx.room.TypeConverters
 import com.google.gson.annotations.SerializedName
 
 @Entity(tableName = "weather_property")
@@ -35,13 +35,54 @@ data class WeatherResponse(
     val longitude: Double,
 
     @SerializedName("timezone")
-    val timezone: String,
+    val timezone: String?,
 
     @SerializedName("timezone_abbreviation")
-    val timezoneAbbreviation: String,
+    val timezoneAbbreviation: String?,
 
     @SerializedName("utc_offset_seconds")
     val utcOffsetSeconds: Int,
 
     var icons: ArrayList<Int>,
-)
+):Parcelable {
+    constructor(parcel: Parcel) : this(
+        parcel.readInt(),
+        TODO("currentWeather"),
+        TODO("daily"),
+        TODO("dailyUnits"),
+        parcel.readDouble(),
+        parcel.readDouble(),
+        parcel.readDouble(),
+        parcel.readDouble(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readInt(),
+        TODO("icons")
+    ) {
+    }
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeInt(id)
+        parcel.writeDouble(elevation)
+        parcel.writeDouble(generationtimeMs)
+        parcel.writeDouble(latitude)
+        parcel.writeDouble(longitude)
+        parcel.writeString(timezone)
+        parcel.writeString(timezoneAbbreviation)
+        parcel.writeInt(utcOffsetSeconds)
+    }
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    companion object CREATOR : Parcelable.Creator<WeatherResponse> {
+        override fun createFromParcel(parcel: Parcel): WeatherResponse {
+            return WeatherResponse(parcel)
+        }
+
+        override fun newArray(size: Int): Array<WeatherResponse?> {
+            return arrayOfNulls(size)
+        }
+    }
+}
