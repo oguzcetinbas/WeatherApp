@@ -43,7 +43,7 @@ data class WeatherResponse(
     @SerializedName("utc_offset_seconds")
     val utcOffsetSeconds: Int,
 
-    var icons: ArrayList<Int>,
+    var icons: ArrayList<Int>
 ):Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readInt(),

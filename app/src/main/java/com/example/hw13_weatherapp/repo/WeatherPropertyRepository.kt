@@ -26,7 +26,7 @@ class WeatherPropertyRepository(private val context: Context) {
         val weatherPropertyDatabase = Room.databaseBuilder(
             context.applicationContext,
             WeatherPropertyDatabase::class.java,
-            "name_property_database",
+            "name_property_database"
         ).build()
 
         weatherPropertyDao = weatherPropertyDatabase.weatherPropertyDao()
@@ -90,13 +90,13 @@ class WeatherPropertyRepository(private val context: Context) {
                 0 -> icons.add(Consts.GUNES)
                 in 1..3 -> icons.add(Consts.PARCA)
                 45, 48 -> icons.add(Consts.SIS)
-                51, 53, 55, 56, 57 -> icons.add(Consts.YAGMUR)
-                61, 63, 65, 66, 67 -> icons.add(Consts.FIRTINA)
-                71, 73, 75, 77 -> icons.add(Consts.FIRTINA)
-                80, 81, 82 -> icons.add(Consts.KAR)
-                85, 86 -> icons.add(Consts.KAR)
-                95 -> icons.add(Consts.FIRTINA)
-                96, 99 -> icons.add(Consts.FIRTINA)
+                51, 53, 55, 56, 57 -> icons.add(Consts.GUNES)
+                61, 63, 65, 66, 67 -> icons.add(Consts.YAGMUR)
+                71, 73, 75, 77 -> icons.add(Consts.YAGMUR)
+                80, 81, 82 -> icons.add(Consts.PARCA)
+                85, 86 -> icons.add(Consts.FIRTINA)
+                95 -> icons.add(Consts.KAR)
+                96, 99 -> icons.add(Consts.KAR)
             }
         }
         weatherResponse?.icons = icons

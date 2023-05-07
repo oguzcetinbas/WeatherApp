@@ -21,10 +21,7 @@ class WeatherDataAdapter(weatherResponse: WeatherResponse) : Adapter<WeatherData
     private val minTemps = weatherResponse.daily.apparentTemperatureMin
     private val icons = weatherResponse.icons
 
-    override fun onCreateViewHolder(
-        parent: ViewGroup,
-        viewType: Int
-    ): WeatherDataAdapter.WeatherDataViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WeatherDataAdapter.WeatherDataViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
 
         val view = when (viewType) {
@@ -50,7 +47,7 @@ class WeatherDataAdapter(weatherResponse: WeatherResponse) : Adapter<WeatherData
             time = times[position],
             maxTemp = maxTemps[position],
             minTemp = minTemps[position],
-            icon = icons[position],
+            icon = icons[position]
 
             )
     }

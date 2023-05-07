@@ -16,6 +16,4 @@ object NetworkUtil {
                 networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) ||
                 networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)
     }
-
-
 }
