@@ -13,7 +13,8 @@ import com.example.hw13_weatherapp.databinding.CurrentDayItemBinding
 import com.example.hw13_weatherapp.databinding.NextDaysItemBinding
 import com.example.hw13_weatherapp.model.data.WeatherResponse
 
-class WeatherDataAdapter(weatherResponse: WeatherResponse) : Adapter<WeatherDataAdapter.WeatherDataViewHolder>() {
+class WeatherDataAdapter(private val weatherResponse: WeatherResponse, val onClick: (Int) -> Unit) :
+    Adapter<WeatherDataAdapter.WeatherDataViewHolder>() {
 
     private val currentWeather = weatherResponse.currentWeather
     private val times = weatherResponse.daily.time
@@ -21,7 +22,11 @@ class WeatherDataAdapter(weatherResponse: WeatherResponse) : Adapter<WeatherData
     private val minTemps = weatherResponse.daily.apparentTemperatureMin
     private val icons = weatherResponse.icons
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WeatherDataAdapter.WeatherDataViewHolder {
+
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): WeatherDataAdapter.WeatherDataViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
 
         val view = when (viewType) {
@@ -48,8 +53,7 @@ class WeatherDataAdapter(weatherResponse: WeatherResponse) : Adapter<WeatherData
             maxTemp = maxTemps[position],
             minTemp = minTemps[position],
             icon = icons[position]
-
-            )
+        )
     }
 
     override fun getItemCount(): Int {
@@ -88,6 +92,9 @@ class WeatherDataAdapter(weatherResponse: WeatherResponse) : Adapter<WeatherData
                     tvMaxTemp.text = maxTemp.toString().addCelcius()
                     ivWeatherIcon.setImageResource(icon)
 
+                    cardViewCurrentDay.setOnClickListener {
+                        onClick(adapterPosition)
+                    }
                 }
             }
         }

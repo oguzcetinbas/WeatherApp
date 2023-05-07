@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.example.hw13_weatherapp.databinding.FragmentHomeBinding
 import com.example.hw13_weatherapp.model.data.WeatherResponse
 import com.example.hw13_weatherapp.repo.WeatherPropertyRepository
@@ -30,7 +31,6 @@ class HomeFragment : Fragment(){
             HomeViewModelFactory(weatherPropertyRepository)
         )[HomeViewModel::class.java]
 
-
         initObserve()
         return binding.root
     }
@@ -40,11 +40,14 @@ class HomeFragment : Fragment(){
             initRecyclerView(it)
         }
     }
-    private fun initRecyclerView(weatherResponse: WeatherResponse?) {
+    private fun initRecyclerView(weatherResponse : WeatherResponse?) {
 
-        val adapter = WeatherDataAdapter(weatherResponse ?: throw IllegalAccessError(""))
-        //findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToSecondFragment(weatherResponse))
-        binding.recyclerView.adapter = adapter
+        val adapters = weatherResponse?.let {weatherRes ->
+            WeatherDataAdapter(weatherRes) {
+                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToSecondFragment(weatherRes,it))
+            }
+        }
+        binding.recyclerView.adapter = adapters
     }
 
 }

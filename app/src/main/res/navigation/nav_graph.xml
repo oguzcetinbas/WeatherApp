@@ -21,7 +21,10 @@
         tools:layout="@layout/fragment_second">
         <argument
             app:argType="com.example.hw13_weatherapp.model.data.WeatherResponse"
-            android:name="data"
+            android:name="weatherRes"
             app:nullable="true"/>
+        <argument
+            android:name="dataaa"
+            app:argType="integer" />
     </fragment>
 </navigation>
