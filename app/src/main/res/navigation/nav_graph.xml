@@ -24,7 +24,7 @@
             android:name="weatherRes"
             app:nullable="true"/>
         <argument
-            android:name="dataaa"
+            android:name="position"
             app:argType="integer" />
     </fragment>
 </navigation>

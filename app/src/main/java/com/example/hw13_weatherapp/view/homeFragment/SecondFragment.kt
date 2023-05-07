@@ -23,7 +23,7 @@ class SecondFragment : Fragment() {
 
 
         val weatherData = args.weatherRes
-        val position = args.dataaa
+        val position = args.position
 
         binding.apply {
             title.text = weatherData?.daily?.time?.get(position)
