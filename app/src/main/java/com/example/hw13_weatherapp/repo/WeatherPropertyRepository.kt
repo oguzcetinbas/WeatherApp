@@ -9,6 +9,7 @@ import com.example.hw13_weatherapp.db.WeatherPropertyDatabase
 import com.example.hw13_weatherapp.model.api.WeatherApiService
 import com.example.hw13_weatherapp.model.data.WeatherResponse
 import com.example.hw13_weatherapp.util.NetworkUtil
+import kotlinx.coroutines.Dispatchers
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -62,8 +63,13 @@ class WeatherPropertyRepository(private val context: Context) {
             override fun onFailure(call: Call<WeatherResponse>, t: Throwable) {
                 fetchFromDatabase(callback)
             }
+
         })
     }
+
+//    suspend fun getResponseInRepository() {
+//        val response = weatherApiService.getWeatherResult()
+//    }
     private fun fetchFromDatabase(callback: (properties: WeatherResponse) -> Unit) {
         executor.execute {
             val properties = weatherPropertyDao.getAll()

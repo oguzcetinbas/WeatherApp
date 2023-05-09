@@ -6,7 +6,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import java.util.concurrent.TimeUnit
 
-class CustomOkHttpClient() : OkHttpClient() {
+class CustomOkHttpClient : OkHttpClient() {
     fun onCreate() : OkHttpClient{
         val httpInterceptor = HttpLoggingInterceptor()
         httpInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY)

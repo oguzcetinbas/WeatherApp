@@ -92,7 +92,7 @@ class WeatherDataAdapter(private val weatherResponse: WeatherResponse, val onCli
                     tvMaxTemp.text = maxTemp.toString().addCelcius()
                     ivWeatherIcon.setImageResource(icon)
 
-                    cardViewCurrentDay.setOnClickListener {
+                    root.setOnClickListener {
                         onClick(adapterPosition)
                     }
                 }

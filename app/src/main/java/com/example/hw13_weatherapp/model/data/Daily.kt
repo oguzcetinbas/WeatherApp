@@ -5,8 +5,10 @@ import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
 
+@Parcelize
 @Entity(tableName = "table2")
 
 data class Daily(
@@ -23,4 +25,4 @@ data class Daily(
 
     @SerializedName("weathercode")
     val weathercode: List<Int?>
-)
+):Parcelable
