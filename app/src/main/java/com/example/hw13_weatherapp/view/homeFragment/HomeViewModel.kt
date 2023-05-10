@@ -10,8 +10,7 @@ import com.example.hw13_weatherapp.repo.WeatherPropertyRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class HomeViewModel(private val weatherPropertyRepository: WeatherPropertyRepository) :
-    ViewModel() {
+class HomeViewModel(private val weatherPropertyRepository: WeatherPropertyRepository) : ViewModel() {
 
     private val _weatherData = MutableLiveData<WeatherResponse?>()
     val weatherData: LiveData<WeatherResponse?> = _weatherData
@@ -21,14 +20,10 @@ class HomeViewModel(private val weatherPropertyRepository: WeatherPropertyReposi
     }
 
     private fun fetchProperties() {
-        weatherPropertyRepository.fetchProperties { properties ->
-            _weatherData.postValue(properties)
+        viewModelScope.launch {
+            val properties = weatherPropertyRepository.fetchProperties()
+            _weatherData.value = properties
         }
     }
-
-//    fun getDataFromServiceWithCoroutines() {
-//        viewModelScope.launch(Dispatchers.IO) {
-//            weatherPropertyRepository.getResponseInRepository()
-//        }
-//    }
 }
+

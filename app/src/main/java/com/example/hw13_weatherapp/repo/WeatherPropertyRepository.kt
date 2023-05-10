@@ -1,7 +1,6 @@
 package com.example.hw13_weatherapp.repo
 
 import android.content.Context
-import android.util.Log
 import androidx.room.Room
 import com.example.hw13_weatherapp.constants.Consts
 import com.example.hw13_weatherapp.db.WeatherPropertyDao
@@ -10,18 +9,14 @@ import com.example.hw13_weatherapp.model.api.WeatherApiService
 import com.example.hw13_weatherapp.model.data.WeatherResponse
 import com.example.hw13_weatherapp.util.NetworkUtil
 import kotlinx.coroutines.Dispatchers
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import kotlinx.coroutines.withContext
+import retrofit2.awaitResponse
 import java.lang.Exception
-import java.util.concurrent.ExecutorService
-import java.util.concurrent.Executors
 
 class WeatherPropertyRepository(private val context: Context) {
 
     private val weatherApiService = WeatherApiService.create()
     private lateinit var weatherPropertyDao: WeatherPropertyDao
-    private val executor: ExecutorService = Executors.newSingleThreadExecutor()
 
     init {
         val weatherPropertyDatabase = Room.databaseBuilder(
@@ -32,52 +27,39 @@ class WeatherPropertyRepository(private val context: Context) {
 
         weatherPropertyDao = weatherPropertyDatabase.weatherPropertyDao()
     }
-    fun fetchProperties(callback: (properties: WeatherResponse) -> Unit) {
+
+    suspend fun fetchProperties(): WeatherResponse {
         if (NetworkUtil.isInternetAvailable(context)) {
-                fetchFromService(callback)
-                println("Gelen data servisten")
-        }else {
-            fetchFromDatabase(callback)
+            return fetchFromService()
+            println("Gelen data servisten")
+        } else {
+            return fetchFromDatabase()
             println("Gelen data database'den")
         }
     }
-    private fun fetchFromService(callback: (properties: WeatherResponse) -> Unit ) {
-        weatherApiService.getWeatherResult().enqueue(object : Callback<WeatherResponse> {
 
-            override fun onResponse(
-                call: Call<WeatherResponse>,
-                response: Response<WeatherResponse>
-            ) {
-                if (response.isSuccessful) {
-                    val responseList = response.body()
-                    if (responseList != null) {
-                        callback(responseList)
-                        insertProperties(responseList)
-                    }
-                }else {
-                    fetchFromDatabase(callback)
-                }
-
-               setIcons(response.body())
-            }
-            override fun onFailure(call: Call<WeatherResponse>, t: Throwable) {
-                fetchFromDatabase(callback)
+    private suspend fun fetchFromService(): WeatherResponse {
+        val response = weatherApiService.getWeatherResult().awaitResponse()
+        if (response.isSuccessful) {
+            val responseList = response.body()
+            if (responseList != null) {
+                insertProperties(responseList)
+                setIcons(responseList)
+                return responseList
             }
 
-        })
+        }
+        return fetchFromDatabase()
     }
 
-//    suspend fun getResponseInRepository() {
-//        val response = weatherApiService.getWeatherResult()
-//    }
-    private fun fetchFromDatabase(callback: (properties: WeatherResponse) -> Unit) {
-        executor.execute {
-            val properties = weatherPropertyDao.getAll()
-            callback(properties)
+    private suspend fun fetchFromDatabase(): WeatherResponse {
+        return withContext(Dispatchers.IO) {
+            weatherPropertyDao.getAll()
         }
     }
-    fun insertProperties(properties: WeatherResponse) {
-        executor.execute {
+
+    private suspend fun insertProperties(properties: WeatherResponse) {
+        withContext(Dispatchers.IO) {
             try {
                 weatherPropertyDao.insert(properties)
             } catch (e: Exception) {
@@ -85,6 +67,7 @@ class WeatherPropertyRepository(private val context: Context) {
             }
         }
     }
+
     private fun setIcons(weatherResponse: WeatherResponse?) {
 
         val weatherCodes = weatherResponse?.daily?.weathercode
