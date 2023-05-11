@@ -23,10 +23,8 @@ class WeatherDataAdapter(private val weatherResponse: WeatherResponse, val onCli
     private val icons = weatherResponse.icons
 
 
-    override fun onCreateViewHolder(
-        parent: ViewGroup,
-        viewType: Int
-    ): WeatherDataAdapter.WeatherDataViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WeatherDataAdapter.WeatherDataViewHolder {
+
         val layoutInflater = LayoutInflater.from(parent.context)
 
         val view = when (viewType) {
@@ -48,6 +46,7 @@ class WeatherDataAdapter(private val weatherResponse: WeatherResponse, val onCli
     }
 
     override fun onBindViewHolder(holder: WeatherDataAdapter.WeatherDataViewHolder, position: Int) {
+
         holder.bind(
             time = times[position],
             maxTemp = maxTemps[position],
@@ -57,7 +56,7 @@ class WeatherDataAdapter(private val weatherResponse: WeatherResponse, val onCli
     }
 
     override fun getItemCount(): Int {
-        return times.size ?: 0
+        return times.size
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -69,13 +68,8 @@ class WeatherDataAdapter(private val weatherResponse: WeatherResponse, val onCli
     }
 
     inner class WeatherDataViewHolder(itemView: View) : ViewHolder(itemView) {
-        fun bind(
-            time: String?,
-            maxTemp: Double?,
-            minTemp: Double?,
-            icon: Int
+        fun bind(time: String?, maxTemp: Double?, minTemp: Double?, icon: Int) {
 
-        ) {
             if (adapterPosition == Consts.VIEW_TYPE_CURRENT_DAY) {
                 val binding = CurrentDayItemBinding.bind(itemView)
                 binding.apply {

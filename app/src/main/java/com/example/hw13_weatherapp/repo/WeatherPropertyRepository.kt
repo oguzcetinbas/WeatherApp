@@ -47,7 +47,6 @@ class WeatherPropertyRepository(private val context: Context) {
                 setIcons(responseList)
                 return responseList
             }
-
         }
         return fetchFromDatabase()
     }

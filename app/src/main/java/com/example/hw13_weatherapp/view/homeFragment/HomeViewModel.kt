@@ -24,6 +24,7 @@ class HomeViewModel(private val weatherPropertyRepository: WeatherPropertyReposi
             val properties = weatherPropertyRepository.fetchProperties()
             _weatherData.value = properties
         }
+
     }
 }
 
