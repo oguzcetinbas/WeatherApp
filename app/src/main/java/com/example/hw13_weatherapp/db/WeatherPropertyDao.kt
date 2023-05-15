@@ -9,12 +9,12 @@ import com.example.hw13_weatherapp.model.data.WeatherResponse
 interface WeatherPropertyDao  {
 
     @Query("SELECT * FROM weather_property")
-    suspend fun getAll(): WeatherResponse
+     fun getAll(): WeatherResponse
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(weatherResponse: WeatherResponse)
+     fun insert(weatherResponse: WeatherResponse)
 
     @Query("DELETE FROM weather_property")
-    suspend fun deleteAllItem()
+     fun deleteAllItem()
 
 }
