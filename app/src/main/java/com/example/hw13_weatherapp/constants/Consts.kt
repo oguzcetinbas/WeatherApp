@@ -18,6 +18,8 @@ object Consts{
     const val YAGMUR = R.drawable.ic_yagmur
     const val FIRTINA = R.drawable.ic_firtina
     const val KAR = R.drawable.ic_kar
+
+    const val CHANNEL_ID = "CHANNEL_ID"
 }
 
 fun String.addCelcius(): String {

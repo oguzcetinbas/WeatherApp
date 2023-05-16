@@ -5,16 +5,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.app.NotificationManagerCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.hw13_weatherapp.databinding.FragmentHomeBinding
 import com.example.hw13_weatherapp.model.data.WeatherResponse
 import com.example.hw13_weatherapp.repo.WeatherPropertyRepository
+import com.example.hw13_weatherapp.utils.sendNotification
 import com.example.hw13_weatherapp.view.factory.HomeViewModelFactory
 
 class HomeFragment : Fragment(){
-
 
     private lateinit var binding: FragmentHomeBinding
     private lateinit var viewModel: HomeViewModel
@@ -38,6 +39,7 @@ class HomeFragment : Fragment(){
     fun initObserve() {
         viewModel.weatherData.observe(viewLifecycleOwner) {
             initRecyclerView(it)
+            NotificationManagerCompat.from(requireContext()).sendNotification("Current Weather", it?.currentWeather?.temperature.toString(), requireContext())
         }
     }
     private fun initRecyclerView(weatherResponse : WeatherResponse?) {
@@ -49,5 +51,7 @@ class HomeFragment : Fragment(){
         }
         binding.recyclerView.adapter = adapters
     }
+
+
 
 }

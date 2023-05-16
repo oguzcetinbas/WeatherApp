@@ -7,7 +7,7 @@ import com.example.hw13_weatherapp.db.WeatherPropertyDao
 import com.example.hw13_weatherapp.db.WeatherPropertyDatabase
 import com.example.hw13_weatherapp.model.api.WeatherApiService
 import com.example.hw13_weatherapp.model.data.WeatherResponse
-import com.example.hw13_weatherapp.util.NetworkUtil
+import com.example.hw13_weatherapp.network.NetworkUtil
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.awaitResponse
