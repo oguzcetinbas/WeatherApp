@@ -9,13 +9,16 @@ import com.example.hw13_weatherapp.model.api.WeatherApiService
 import com.example.hw13_weatherapp.model.data.WeatherResponse
 import com.example.hw13_weatherapp.network.NetworkUtil
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
-import retrofit2.awaitResponse
-import java.lang.Exception
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
+import retrofit2.Call
 
-class WeatherPropertyRepository(private val context: Context) {
+class WeatherPropertyRepository(
+    private val context: Context,
+    private val weatherApiService: WeatherApiService
+) {
 
-    private val weatherApiService = WeatherApiService.create()
     private lateinit var weatherPropertyDao: WeatherPropertyDao
 
     init {
@@ -23,49 +26,26 @@ class WeatherPropertyRepository(private val context: Context) {
             context.applicationContext,
             WeatherPropertyDatabase::class.java,
             "name_property_database"
-        ).build()
+        ).fallbackToDestructiveMigration()
+            .build()
 
         weatherPropertyDao = weatherPropertyDatabase.weatherPropertyDao()
     }
 
-    suspend fun fetchProperties(): WeatherResponse {
+    fun insertProperties(properties: WeatherResponse?) {
+        weatherPropertyDao.insertToRoomDb(properties)
+    }
+
+    fun getAllProperties(): Flow<WeatherResponse?> = flow {
         if (NetworkUtil.isInternetAvailable(context)) {
-            return fetchFromService()
-            println("Gelen data servisten")
-        } else {
-            return fetchFromDatabase()
-            println("Gelen data database'den")
+            val propertiesFromApi = weatherApiService.getWeatherResult()
+            setIcons(propertiesFromApi)
+            insertProperties(propertiesFromApi)
+            emit(propertiesFromApi)
+        }else {
+            emit(weatherPropertyDao.getAllFromRoomDb())
         }
-    }
-
-    private suspend fun fetchFromService(): WeatherResponse {
-        val response = weatherApiService.getWeatherResult().awaitResponse()
-        if (response.isSuccessful) {
-            val responseList = response.body()
-            if (responseList != null) {
-                insertProperties(responseList)
-                setIcons(responseList)
-                return responseList
-            }
-        }
-        return fetchFromDatabase()
-    }
-
-    private suspend fun fetchFromDatabase(): WeatherResponse {
-        return withContext(Dispatchers.IO) {
-            weatherPropertyDao.getAll()
-        }
-    }
-
-    private suspend fun insertProperties(properties: WeatherResponse) {
-        withContext(Dispatchers.IO) {
-            try {
-                weatherPropertyDao.insert(properties)
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-        }
-    }
+    }.flowOn(Dispatchers.IO)
 
     private fun setIcons(weatherResponse: WeatherResponse?) {
 

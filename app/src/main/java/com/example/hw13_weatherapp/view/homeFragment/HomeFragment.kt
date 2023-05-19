@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.hw13_weatherapp.databinding.FragmentHomeBinding
+import com.example.hw13_weatherapp.model.api.WeatherApiService
 import com.example.hw13_weatherapp.model.data.WeatherResponse
 import com.example.hw13_weatherapp.repo.WeatherPropertyRepository
 import com.example.hw13_weatherapp.utils.sendNotification
@@ -25,8 +26,8 @@ class HomeFragment : Fragment(){
     ): View {
         binding = FragmentHomeBinding.inflate(inflater)
 
-
-        val weatherPropertyRepository = WeatherPropertyRepository(requireContext())
+        val weatherApiService = WeatherApiService.create()
+        val weatherPropertyRepository = WeatherPropertyRepository(requireContext(),weatherApiService)
         viewModel = ViewModelProvider(
             this,
             HomeViewModelFactory(weatherPropertyRepository)
@@ -37,7 +38,7 @@ class HomeFragment : Fragment(){
     }
 
     fun initObserve() {
-        viewModel.weatherData.observe(viewLifecycleOwner) {
+        viewModel.properties.observe(viewLifecycleOwner) {
             initRecyclerView(it)
             NotificationManagerCompat.from(requireContext()).sendNotification("Current Weather", it?.currentWeather?.temperature.toString(), requireContext())
         }

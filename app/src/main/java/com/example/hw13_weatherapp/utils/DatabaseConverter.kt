@@ -39,12 +39,12 @@ class DatabaseConverter {
     }
 
     @TypeConverter
-    fun fromStringtoArraylistInt(value: String): ArrayList<Int> {
-        return Gson().fromJson(value, object : TypeToken<ArrayList<Int>>() {}.type)
+    fun fromStringtoArraylistInt(value: String): ArrayList<Int>? {
+        return Gson().fromJson(value, object : TypeToken<ArrayList<Int>?>() {}.type)
     }
 
     @TypeConverter
-    fun fromArrayList(list: ArrayList<Int>): String {
+    fun fromArrayList(list: ArrayList<Int>?): String {
         return Gson().toJson(list)
     }
 
