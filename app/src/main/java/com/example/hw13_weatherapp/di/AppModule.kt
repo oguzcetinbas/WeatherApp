@@ -29,11 +29,14 @@ class AppModule {
     @Singleton
     fun provideRetrofit(): Retrofit {
         return Retrofit.Builder()
-            .baseUrl(Consts.BASE_URL)
+            .baseUrl(provideBaseUrl())
             .addConverterFactory(GsonConverterFactory.create())
             .client(provideOkHttp())
             .build()
     }
+
+    @Provides
+    fun provideBaseUrl() = "https://api.open-meteo.com/"
 
     @Provides
     @Singleton
