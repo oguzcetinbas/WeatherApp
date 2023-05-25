@@ -25,13 +25,6 @@ class HomeFragment : Fragment(){
     ): View {
         binding = FragmentHomeBinding.inflate(inflater)
 
-//        val weatherApiService = WeatherApiService.create()
-//        val weatherPropertyRepository = WeatherPropertyRepository(requireContext(),weatherApiService)
-//        viewModel = ViewModelProvider(
-//            this,
-//            HomeViewModelFactory(weatherPropertyRepository)
-//        )[HomeViewModel::class.java]
-
         initObserve()
         return binding.root
     }
