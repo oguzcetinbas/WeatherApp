@@ -1,49 +1,29 @@
 package com.example.hw13_weatherapp.repo
 
 import android.content.Context
-import androidx.room.Room
 import com.example.hw13_weatherapp.constants.Consts
-import com.example.hw13_weatherapp.db.WeatherPropertyDao
-import com.example.hw13_weatherapp.db.WeatherPropertyDatabase
-import com.example.hw13_weatherapp.model.api.WeatherApiService
 import com.example.hw13_weatherapp.model.data.WeatherResponse
 import com.example.hw13_weatherapp.network.NetworkUtil
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
-import retrofit2.Call
 
 class WeatherPropertyRepository(
     private val context: Context,
-    private val weatherApiService: WeatherApiService
+    private val remoteDataSource:WeatherRemoteDataSource,
+    private val localDataSource: WeatherLocalDataSource
 ) {
 
-    private lateinit var weatherPropertyDao: WeatherPropertyDao
-
-    init {
-        val weatherPropertyDatabase = Room.databaseBuilder(
-            context.applicationContext,
-            WeatherPropertyDatabase::class.java,
-            "name_property_database"
-        ).fallbackToDestructiveMigration()
-            .build()
-
-        weatherPropertyDao = weatherPropertyDatabase.weatherPropertyDao()
-    }
-
-    fun insertProperties(properties: WeatherResponse?) {
-        weatherPropertyDao.insertToRoomDb(properties)
-    }
 
     fun getAllProperties(): Flow<WeatherResponse?> = flow {
         if (NetworkUtil.isInternetAvailable(context)) {
-            val propertiesFromApi = weatherApiService.getWeatherResult()
+            val propertiesFromApi = remoteDataSource.getProperties()
             setIcons(propertiesFromApi)
-            insertProperties(propertiesFromApi)
+            localDataSource.insertProperties(propertiesFromApi)
             emit(propertiesFromApi)
         }else {
-            emit(weatherPropertyDao.getAllFromRoomDb())
+            emit(localDataSource.getAllPropertiesFromRoomDb())
         }
     }.flowOn(Dispatchers.IO)
 

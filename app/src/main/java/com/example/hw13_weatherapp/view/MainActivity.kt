@@ -19,7 +19,9 @@ import androidx.core.content.ContextCompat
 import com.example.hw13_weatherapp.R
 import com.example.hw13_weatherapp.constants.Consts.CHANNEL_ID
 import com.example.hw13_weatherapp.databinding.ActivityMainBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding

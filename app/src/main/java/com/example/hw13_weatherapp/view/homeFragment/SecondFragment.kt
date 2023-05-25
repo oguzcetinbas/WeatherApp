@@ -8,7 +8,9 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.navArgs
 import com.example.hw13_weatherapp.constants.addCelcius
 import com.example.hw13_weatherapp.databinding.FragmentSecondBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SecondFragment : Fragment() {
 
     private lateinit var binding: FragmentSecondBinding

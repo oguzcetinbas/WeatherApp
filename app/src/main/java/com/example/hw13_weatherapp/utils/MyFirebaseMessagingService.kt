@@ -8,7 +8,7 @@ import com.google.firebase.messaging.RemoteMessage
 class MyFirebaseMessagingService : FirebaseMessagingService() {
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
-        // Check if message contains a notification payload.
+
         remoteMessage.notification?.let {
             Log.d("TAG", "Message Notification Body: ${it.body}")
         }

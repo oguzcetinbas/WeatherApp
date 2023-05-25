@@ -46,4 +46,5 @@ data class WeatherResponse(
     val utcOffsetSeconds: Int,
 
     var icons: ArrayList<Int>
+
 ):Parcelable
