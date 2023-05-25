@@ -1,4 +1,4 @@
-package com.example.hw13_weatherapp.view.homeFragment
+package com.example.hw13_weatherapp.di
 
 import android.content.Context
 import com.example.hw13_weatherapp.db.WeatherPropertyDao
@@ -16,12 +16,7 @@ import retrofit2.Retrofit
 
 @Module
 @InstallIn(ViewModelComponent::class)
-class MainModule {
-
-    @Provides
-    fun provideWeatherApiService(retrofit: Retrofit): WeatherApiService {
-        return retrofit.create(WeatherApiService::class.java)
-    }
+object MainModule {
 
     @Provides
     fun provideWeatherPropertyDao(database: WeatherPropertyDatabase): WeatherPropertyDao {
@@ -46,5 +41,4 @@ class MainModule {
     ): WeatherPropertyRepository {
         return WeatherPropertyRepository(context,remoteDataSource,localDataSource)
     }
-
 }

@@ -33,7 +33,6 @@ class MainActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
         createNotificationChannel()
-
     }
 
     private val requestPermissionLauncher = registerForActivityResult(

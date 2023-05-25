@@ -5,6 +5,7 @@ import android.os.Environment
 import androidx.room.Room
 import com.example.hw13_weatherapp.constants.Consts
 import com.example.hw13_weatherapp.db.WeatherPropertyDatabase
+import com.example.hw13_weatherapp.model.api.WeatherApiService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -23,20 +24,23 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-class AppModule {
+object AppModule {
 
     @Provides
     @Singleton
     fun provideRetrofit(): Retrofit {
         return Retrofit.Builder()
-            .baseUrl(provideBaseUrl())
+            .baseUrl(Consts.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .client(provideOkHttp())
             .build()
     }
 
     @Provides
-    fun provideBaseUrl() = "https://api.open-meteo.com/"
+    @Singleton
+    fun provideWeatherApiService(retrofit: Retrofit): WeatherApiService {
+        return retrofit.create(WeatherApiService::class.java)
+    }
 
     @Provides
     @Singleton
