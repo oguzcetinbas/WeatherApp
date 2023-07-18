@@ -22,7 +22,4 @@ Weather App is an application where you can see today's weather and 14 days weat
   - [OkHttp](https://square.github.io/okhttp/recipes/)
   - [Gson](https://github.com/google/gson)
 
-# Output
-| Home Screen | Detail Screen |
-| --- | --- | 
-| <img src="screenshots/anaekran.jpg" width=150/> <img src="screenshots/anaekran2.jpg" width=150/> | <img src="screenshots/detayekran.jpg" width=150/> | 
+
