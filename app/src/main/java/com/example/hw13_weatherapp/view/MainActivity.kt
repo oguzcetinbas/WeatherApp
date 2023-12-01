@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
         if (isGranted) {
 
         } else {
-            // TODO: Inform user that that your app will not show notifications.
+
         }
     }
 

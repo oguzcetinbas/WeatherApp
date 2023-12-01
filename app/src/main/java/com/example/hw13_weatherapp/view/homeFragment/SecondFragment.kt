@@ -23,6 +23,7 @@ class SecondFragment : Fragment() {
     ): View {
         binding = FragmentSecondBinding.inflate(inflater)
 
+        // qweasdzxc
 
         val weatherData = args.weatherRes
         val position = args.position
